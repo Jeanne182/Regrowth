@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4478355056939559911}
   - component: {fileID: 4478355056939559910}
   m_Layer: 0
-  m_Name: leaf_turn_0
+  m_Name: Leaf_coin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: -1120514743569998311, guid: 25a5102c040e388469b9f877d0b26aac,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

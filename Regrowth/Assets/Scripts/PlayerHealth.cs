@@ -4,14 +4,26 @@ using System.Collections;
 public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 100;
-    public int currentHealth; 
+    public int currentHealth;
 
     public float invincibilityTimeAfterHit = 3f;
     public float invincibilityFlashDelay = 0.2f;
-    public bool isInvincible = false; 
+    public bool isInvincible = false;
 
-    public SpriteRenderer graphics; 
+    public SpriteRenderer graphics;
     public HealthBar healthBar;
+
+    public static PlayerHealth instance ;
+
+    private void Awake()
+    {
+        if(instance != null){
+          Debug.LogWarning("Il y a plus d'un PlayerHealth");
+          return ;
+        }
+        instance = this;
+    }
+
 
     void Start()
     {
@@ -31,13 +43,26 @@ public class PlayerHealth : MonoBehaviour
     {
         if(!isInvincible)
         {
-            currentHealth -= damage; 
+            currentHealth -= damage;
             healthBar.SetHealth(currentHealth);
             isInvincible = true;
             StartCoroutine(InvincibilityFlash());
             StartCoroutine(HandleInvincibilityDelay());
         }
-        
+
+    }
+
+    public void HealPlayer(int amount)
+    {
+        if((currentHealth + amount) > maxHealth){
+          currentHealth = maxHealth;
+        }
+        else{
+          currentHealth += amount; 
+        }
+
+        healthBar.SetHealth(currentHealth);
+
     }
 
     public IEnumerator InvincibilityFlash()
