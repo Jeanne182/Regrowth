@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -18,13 +18,30 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody2D rb;
     public Animator animator;
     public SpriteRenderer spriteRenderer;
+    public CapsuleCollider2D playerCollider;
+
     private Vector3 velocity = Vector3.zero;
     private float horizontalMovement;
     private float verticalMovement;
 
+    public static PlayerMovement instance ;
+
+    private void Awake()
+    {
+        if(instance != null){
+          Debug.LogWarning("Il y a plus d'un PlayerMovement");
+          return ;
+        }
+        instance = this;
+    }
+
+
     void Update()
     {
-        if(Input.GetButtonDown("Jump") && isGrounded)
+      horizontalMovement = Input.GetAxis("Horizontal") * moveSpeed * Time.fixedDeltaTime;
+      verticalMovement = Input.GetAxis("Vertical") * climbSpeed * Time.fixedDeltaTime;
+
+        if(Input.GetButtonDown("Jump") && isGrounded && !isClimbing)
         {
             isJumping = true;
         }
@@ -32,11 +49,10 @@ public class PlayerMovement : MonoBehaviour
         Flip(rb.velocity.x);
         float characterVelocity = Mathf.Abs(rb.velocity.x);
         animator.SetFloat("Speed", characterVelocity);
+        animator.SetBool("isClimbing", isClimbing);
     }
     void FixedUpdate()
     {
-        horizontalMovement = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
-        verticalMovement = Input.GetAxis("Vertical") * climbSpeed * Time.deltaTime;
 
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, collisionLayers);
         MovePlayer(horizontalMovement, verticalMovement);

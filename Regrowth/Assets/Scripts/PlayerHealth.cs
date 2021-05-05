@@ -35,7 +35,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.H))
         {
-            TakeDamage(20);
+            TakeDamage(60);
         }
     }
 
@@ -45,11 +45,35 @@ public class PlayerHealth : MonoBehaviour
         {
             currentHealth -= damage;
             healthBar.SetHealth(currentHealth);
+
+            if(currentHealth <= 0){
+              Die();
+              return;
+            }
             isInvincible = true;
             StartCoroutine(InvincibilityFlash());
             StartCoroutine(HandleInvincibilityDelay());
         }
 
+    }
+
+    public void Die(){
+      PlayerMovement.instance.enabled = false;
+      PlayerMovement.instance.animator.SetTrigger("Die");
+      PlayerMovement.instance.rb.bodyType = RigidbodyType2D.Kinematic;
+      PlayerMovement.instance.playerCollider.enabled = false;
+      GameOverManager.instance.OnPlayerDeath();
+      //Voir minute 22 vidéo 15 --> enregistrer l'animation et rajouter à la fin des clés en désactivant le sprite renderer
+    }
+
+    public void Respawn(){
+      PlayerMovement.instance.enabled = true ;
+      PlayerMovement.instance.animator.SetTrigger("Respawn");
+      PlayerMovement.instance.rb.bodyType = RigidbodyType2D.Dynamic ;
+      PlayerMovement.instance.playerCollider.enabled = true;
+      currentHealth = maxHealth;
+      healthBar.SetHealth(currentHealth);
+      //Voir minute 22 vidéo 15 --> enregistrer l'animation et rajouter à la fin des clés en désactivant le sprite renderer
     }
 
     public void HealPlayer(int amount)
@@ -58,7 +82,7 @@ public class PlayerHealth : MonoBehaviour
           currentHealth = maxHealth;
         }
         else{
-          currentHealth += amount; 
+          currentHealth += amount;
         }
 
         healthBar.SetHealth(currentHealth);

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1566406298463218421}
   - component: {fileID: 1566406298463218420}
-  - component: {fileID: 1566406298463218422}
+  - component: {fileID: 602162532484357801}
   m_Layer: 0
   m_Name: LadderSolo
   m_TagString: Untagged
@@ -58,7 +58,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 3.1011672}
   m_EdgeRadius: 0
---- !u!114 &1566406298463218422
+--- !u!114 &602162532484357801
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -67,8 +67,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1566406298463218411}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f08ab2c55d2b6421f81129e94a8322e4, type: 3}
+  m_Script: {fileID: 11500000, guid: c19508fe66e824ba79f91623155b02ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colliderLadder: {fileID: 0}
-  interactUI: {fileID: 0}
