@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+ ﻿using UnityEngine;
 using System.Collections;
 
 public class PlayerHealth : MonoBehaviour
@@ -9,6 +9,9 @@ public class PlayerHealth : MonoBehaviour
     public float invincibilityTimeAfterHit = 3f;
     public float invincibilityFlashDelay = 0.2f;
     public bool isInvincible = false;
+
+    public AudioClip hitSound;
+    public AudioClip deadSound;
 
     public SpriteRenderer graphics;
     public HealthBar healthBar;
@@ -43,6 +46,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if(!isInvincible)
         {
+
             currentHealth -= damage;
             healthBar.SetHealth(currentHealth);
 
@@ -51,6 +55,7 @@ public class PlayerHealth : MonoBehaviour
               return;
             }
             isInvincible = true;
+            AudioManager.instance.PlayClipAt(hitSound, transform.position);
             StartCoroutine(InvincibilityFlash());
             StartCoroutine(HandleInvincibilityDelay());
         }
@@ -58,9 +63,11 @@ public class PlayerHealth : MonoBehaviour
     }
 
     public void Die(){
+      AudioManager.instance.PlayClipAt(deadSound, transform.position);
       PlayerMovement.instance.enabled = false;
       PlayerMovement.instance.animator.SetTrigger("Die");
       PlayerMovement.instance.rb.bodyType = RigidbodyType2D.Kinematic;
+      PlayerMovement.instance.rb.velocity = Vector3.zero;
       PlayerMovement.instance.playerCollider.enabled = false;
       GameOverManager.instance.OnPlayerDeath();
       //Voir minute 22 vidéo 15 --> enregistrer l'animation et rajouter à la fin des clés en désactivant le sprite renderer
