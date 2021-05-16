@@ -13,7 +13,6 @@ public class SettingsMenu : MonoBehaviour
     public Slider musicSlider;
     public Slider soundSlider;
 
-
     public void Start()
     {
         //audioMixer.GetFloat("Music", out float musicValueForSlider);
@@ -33,6 +32,7 @@ public class SettingsMenu : MonoBehaviour
             currentResolutionIndex = i;
           }
         }
+
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
